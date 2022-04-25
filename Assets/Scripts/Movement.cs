@@ -1,44 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
-	private int increment = 100;
+	private readonly int increment = 100;
 	private Rigidbody rigidBody;
 	private AudioSource audioSource;
 
 	[SerializeField]
-	private float upSpeed = 13;
+	private readonly float upSpeed = 13;
 	[SerializeField]
-	private float rotationSpeed = 1;
+	private readonly float rotationSpeed = 1;
 
 	void Start() {
-		Debug.Log("Startig");
 		this.rigidBody = GetComponent<Rigidbody>();
-		this.audioSource= GetComponent<AudioSource>();
+		this.audioSource = GetComponent<AudioSource>();
 	}
 
 	void Update() {
+		performMovement();
+		performRotation();
+	}
+
+	private void performMovement() {
 		if (Input.GetKey(KeyCode.W)) {
 			if (!this.audioSource.isPlaying) {
 				this.audioSource.Play();
 			}
 			this.rigidBody.AddRelativeForce(getIndependentValue(Vector3.up, upSpeed));
-			Debug.Log("Moving up");
 		} else {
 			this.audioSource.Pause();
 		}
+	}
 
+	private void performRotation() {
 		if (Input.GetKey(KeyCode.A)) {
 			this.transform.Rotate(getIndependentValue(Vector3.forward, rotationSpeed));
-			Debug.Log("Moving left");
 			return;
 		}
 
 		if (Input.GetKey(KeyCode.D)) {
 			this.transform.Rotate(getIndependentValue(Vector3.back, rotationSpeed));
-			Debug.Log("Moving right");
 			return;
 		}
 	}
