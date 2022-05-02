@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
+	[SerializeField] AudioClip movementSound;
+
 	private readonly int increment = 100;
 	private Rigidbody rigidBody;
 	private AudioSource audioSource;
@@ -23,8 +25,9 @@ public class Movement : MonoBehaviour {
 
 	private void performMovement() {
 		if (Input.GetKey(KeyCode.W)) {
+			// todo add logic about fuel here
 			if (!this.audioSource.isPlaying) {
-				this.audioSource.Play();
+				this.audioSource.PlayOneShot(this.movementSound);
 			}
 			this.rigidBody.AddRelativeForce(getIndependentValue(Vector3.up, upSpeed));
 		} else {
