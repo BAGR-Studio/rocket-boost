@@ -1,6 +1,8 @@
 using UnityEngine;
-using System.Threading;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Threading;
+
 
 public class CollisionHandler : MonoBehaviour {
 
@@ -9,15 +11,18 @@ public class CollisionHandler : MonoBehaviour {
 	[SerializeField] AudioClip crashSound;
 	[SerializeField] AudioClip gameOverSound;
 
+	private ParticleSystem explosionParticle;
+
 	private AudioSource audioSource;
 	private int health;
-	public int fuel;
+	private int fuel;
 	private float time;
 
 	private bool isTransitioning;
 
 	void Start() {
 		this.audioSource = GetComponent<AudioSource>();
+		this.explosionParticle = this.gameObject.transform.Find("Explosion").gameObject.GetComponent<ParticleSystem>();
 		this.health = 10000;
 		this.fuel = 50;
 		this.time = Time.time;
@@ -46,43 +51,45 @@ public class CollisionHandler : MonoBehaviour {
 	private void OnCollisionEnter(Collision collision) {
 		if (isTransitioning) { return; }
 
-		if (collision != null && collision.gameObject.tag == "Obstacle") {
-			this.PlaySound(this.crashSound, 1);
+		if (collision != null && collision.gameObject.tag == Constants.OBSTACLE_NAME) {
+			this.explosionParticle.Play();
+			this.PlaySound(this.crashSound, 0); //figure out why there is sound delay
 			this.health--;
 			return;
 		}
 
 		if (collision != null && collision.gameObject.tag == "Fuel") {
-			// think how to deal with fuel -> logic about consumption should be in movement script, but refilling should be here
-			// think if refilling should be here
 			this.fuel += 10;
 			return;
 		}
 
 		if (collision != null && collision.gameObject.tag == "Finish") {
 			this.isTransitioning = true;
-			this.FinishLevel();
+			var landingParticle = collision.gameObject.transform.Find("LandingParticle").gameObject.GetComponent<ParticleSystem>();
+			this.FinishLevel(landingParticle);
 			return;
 		}
 	}
 
-	private void FinishLevel() {
+	private void FinishLevel(ParticleSystem landingParticle) {
 		Debug.Log("Level completed!");
 	
-		GetComponent<Movement>().enabled = false; //disable control from player
+		GetComponent<Movement>().enabled = false;
+
+		landingParticle.Play();
 
 		int sceneIndex = SceneManager.GetActiveScene().buildIndex;
 		if (isNextScenePresent(sceneIndex)) {
-			this.LoadNextLevel(sceneIndex);
+			StartCoroutine(this.LoadNextLevel(sceneIndex, landingParticle.duration));
 			return;
 		}
 		this.FinishGame();
 	}
 
-	private void LoadNextLevel(int currentSceneIndex) {
+	IEnumerator LoadNextLevel(int currentSceneIndex, float particleDuration) {
 		Debug.Log("Loading next level");
 		this.PlaySound(this.levelFinishSound);
-		Thread.Sleep(1000);
+		yield return new WaitForSeconds(particleDuration + Constants.PARTICLE_DELAY);
 		SceneManager.LoadScene(currentSceneIndex + 1);
 	}
 
