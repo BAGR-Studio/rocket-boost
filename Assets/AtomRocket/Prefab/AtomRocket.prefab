@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 1236185395}
   - component: {fileID: 478805457}
   - component: {fileID: 478805458}
+  - component: {fileID: 8753728939868144437}
   m_Layer: 0
   m_Name: AtomRocket
   m_TagString: Untagged
@@ -779,6 +780,18 @@ MonoBehaviour:
   gameFinishSound: {fileID: 8300000, guid: 08a8e5d599e49024ba026dc440578177, type: 3}
   crashSound: {fileID: 8300000, guid: 4ef8f2e444ac8934096c15d6f1a5c6a2, type: 3}
   gameOverSound: {fileID: 8300000, guid: a2149eeae5c4a6a46a53f9dcc2bc7358, type: 3}
+--- !u!114 &8753728939868144437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854619882081110099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167a98b73772d2942a9e86b6a890e8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8972606480291121315
 GameObject:
   m_ObjectHideFlags: 0
