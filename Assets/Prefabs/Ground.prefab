@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8687700645818743984}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8687700645818743985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -10, z: 80}
-  m_LocalScale: {x: 500, y: 20, z: 200}
+  m_LocalScale: {x: 2074.9, y: 20, z: 2374.0166}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 420fb2e91d15eea45ae27c4a4ac6d4c5, type: 2}
+  - {fileID: 2100000, guid: c25c85fb524f04ea5b7f96dd8eb6cebf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
